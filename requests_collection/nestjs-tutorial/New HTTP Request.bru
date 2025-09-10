@@ -4,6 +4,16 @@ meta {
   seq: 1
 }
 
-get {
-  url: 
+post {
+  url: http://localhost:3000/users/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "test",
+    "email": "test@test.ca",
+    "role": "ADMIN"
+  }
 }
