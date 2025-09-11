@@ -4,40 +4,47 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/CreateUser.dto';
+import { UpdateUserDto } from './dto/UpdateUser.dto';
+import { RoleEnum } from './dto/Role.enum';
+import { getAllUserQueryDto } from './dto/GetAllUserQuery.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  getAllUser(@Query('role') role?: 'ADMIN' | 'DEV' | 'INTERN') {
-    return this.userService.getAllUser(role)
+  getAllUser(@Query(ValidationPipe) query: getAllUserQueryDto) {
+    console.log(query.role)
+    return this.userService.getAllUser(query.role)
   }
 
   @Get(':id')
-  getOneUser(@Param('id') id: string) {
-    return this.userService.getOneUser(+id)
+  getOneUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.getOneUser(id)
   }
 
   @Post()
-  createUser(@Body() user: {name: string, email: string ,role: 'ADMIN' | 'DEV' | 'INTERN'}) {
+  createUser(@Body(ValidationPipe) user: CreateUserDto) {
     return this.userService.createUser(user)
   }
 
   @Patch(':id')
-  updateOneUser(@Param('id') id: string, 
-  @Body() userUpdate: {name?: string, email?: string ,role?: 'ADMIN' | 'DEV' | 'INTERN'}
+  updateOneUser(@Param('id', ParseIntPipe) id: number, 
+  @Body(ValidationPipe) userUpdate: UpdateUserDto
   ) {
-    return this.userService.updateOneUser(+id, userUpdate)
+    return this.userService.updateOneUser(id, userUpdate)
   }
 
   @Delete(':id')
-  deleteOneUser(@Param('id') id: string) {
-    return this.userService.deleteOneUser(+id)
+  deleteOneUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.deleteOneUser(id)
   }
 }
