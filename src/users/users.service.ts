@@ -1,87 +1,52 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserResponseDto } from './dto/UserResponse.dto';
 import { RoleEnum } from './dto/Role.enum';
+import { EntityManager, Equal } from 'typeorm';
+import { User } from './entity/User.entity';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
-    private users : UserResponseDto[] = [
-        {
-            "id": 1,
-            "name": "Leanne Graham",
-            "email": "Sincere@april.biz",
-            "role": RoleEnum.DEV,
-        },
-        {
-            "id": 2,
-            "name": "Ervin Howell",
-            "email": "Shanna@melissa.tv",
-            "role": RoleEnum.INTERN,
-        },
-        {
-            "id": 3,
-            "name": "Clementine Bauch",
-            "email": "Nathan@yesenia.net",
-            "role": RoleEnum.ADMIN,
-        },
-        {
-            "id": 4,
-            "name": "Patricia Lebsack",
-            "email": "Julianne.OConner@kory.org",
-            "role": RoleEnum.ADMIN,
-        },
-        {
-            "id": 5,
-            "name": "Chelsey Dietrich",
-            "email": "Lucio_Hettinger@annie.ca",
-            "role": RoleEnum.DEV,
-        }
-    ]
-    private nextId: number = 6
+    constructor(private readonly entityManager: EntityManager) {}
 
-    getAllUser(role?: 'ADMIN' | 'DEV' | 'INTERN'): UserResponseDto[] {
+    async getAllUsers(role?: RoleEnum): Promise<UserResponseDto[]> {
+        let users;
         if(role){
-            return this.users.filter(user => user.role === role)
+            users = await this.entityManager.findBy(User,{ role: Equal(role)});
+        }else
+        {
+            users = await this.entityManager.find(User);
         }
-        return this.users
+        return plainToInstance<UserResponseDto, User[]>(UserResponseDto, users);
     }
 
-    getOneUser(id: number): UserResponseDto{
-        const returnUser = this.users.find(user => user.id === id)
-        if(!returnUser){
-            throw new NotFoundException(`User ${id} not found`)
+    async getOneUser(id: number): Promise<UserResponseDto> {
+        const user = this.entityManager.findOneBy(User, { id },)
+        if(!user){
+            throw new NotFoundException({ message: `User ${id} not found`}); 
         }
-        return returnUser
+        return plainToInstance(UserResponseDto, user);
     }
 
-    createUser(user: {name: string, email: string ,role: RoleEnum}): UserResponseDto{
-        const newUser= { "id": this.nextId, ...user}
-        this.nextId++
-        this.users.push(newUser)
-
-        return newUser
+    async createUser(user: {name: string, email: string ,role: RoleEnum}): Promise<UserResponseDto> {
+        const newUser= new User(user);
+        return plainToInstance(UserResponseDto, await this.entityManager.save(newUser))
     }
 
-    updateOneUser(id: number, userUpdate: {name?: string, email?: string ,role?: RoleEnum}): UserResponseDto{
-        const updatedUser = this.getOneUser(id);
-        
-        this.users = this.users.map(user => 
-            {
-                if(user.id === id){
-                    return {...user,...userUpdate}
-                }else{
-                    return user;
-                }
-                
-            }
-        )
-
-        return updatedUser
+    async updateOneUser(id: number, userUpdate: {name?: string, email?: string ,role?: RoleEnum}): Promise<UserResponseDto> {
+        if(!await this.getOneUser(id)){
+            throw new NotFoundException({ message: `User ${id} not found`}); 
+        }
+        const result = await this.entityManager.update(User, id, userUpdate)
+        return plainToInstance(UserResponseDto, this.getOneUser(id))
     }
 
-    deleteOneUser(id: number): UserResponseDto{
-        const removedUser = this.getOneUser(id)
-        this.users = this.users.filter(user => user.id !== id)
-
-        return removedUser
+    async deleteOneUser(id: number): Promise<UserResponseDto> {
+        const removedUser = await this.getOneUser(id)
+        if(!removedUser){
+            throw new NotFoundException({ message: `User ${id} not found`});
+        }
+        await this.entityManager.delete(User, id)
+        return plainToInstance(UserResponseDto, removedUser)
     }
 }
