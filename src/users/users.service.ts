@@ -4,6 +4,8 @@ import { RoleEnum } from './dto/Role.enum';
 import { EntityManager, Equal } from 'typeorm';
 import { User } from './entity/User.entity';
 import { plainToInstance } from 'class-transformer';
+import { CreateUserDto } from './dto/CreateUser.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -28,7 +30,11 @@ export class UsersService {
         return plainToInstance(UserResponseDto, user);
     }
 
-    async createUser(user: {name: string, email: string ,role: RoleEnum}): Promise<UserResponseDto> {
+    async createUser(user: CreateUserDto): Promise<UserResponseDto> {
+        
+        const salt = await bcrypt.genSalt();
+        const hash = await bcrypt.hash(user.password, salt);
+        user.password = hash;
         const newUser= new User(user);
         return plainToInstance(UserResponseDto, await this.entityManager.save(newUser))
     }

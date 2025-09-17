@@ -17,4 +17,7 @@ export class CreateUserDto {
         }
     )
     role: RoleEnum;
+
+    @IsString()
+    password: string;
 }

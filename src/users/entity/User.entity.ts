@@ -16,6 +16,9 @@ export class User{
     @Column()
     role: RoleEnum;
 
+    @Column()
+    password: string;
+
     constructor(user: Partial<User>){
         Object.assign(this, user)
     }
