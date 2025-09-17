@@ -2,97 +2,83 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# NestJS Tutorial 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Un projet d'apprentissage NestJS implémentant une API basique pour la gestion des utilisateurs avec authentification, autorisation et intégration PostgreSQL.
 
-## Description
+## Ressources d'apprentissage
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Ce projet est construit en suivant ces ressources :
 
-## Project setup
+-   [Tutoriel NestJS youtube par Dave Gray](https://www.youtube.com/watch?v=8_X0nSrzrCw)
+-   [Documentation officielle NestJS](https://docs.nestjs.com/)
+-   [Tutoriel NestJS CRUD TypeORM avec PostgreSQL Djamware](https://www.djamware.com/post/682fe3626ac70d0cc285f612/nestjs-crud-api-with-typeorm-and-postgresql)
 
-```bash
-$ npm install
-```
+##  Fonctionnalités
 
-## Compile and run the project
+-   **Gestion des utilisateurs** : Opérations CRUD pour les utilisateurs
+-   **Authentification** : Système d'authentification basé sur JWT
+-   **Base de données** : Intégration PostgreSQL avec TypeORM
+-   **Documentation API** : Documentation Swagger/OpenAPI
+-   **Validation** : Validation des requêtes avec class-validator
+-   **Sécurité** : Hachage des mots de passe et jetons JWT
 
-```bash
-# development
-$ npm run start
+##  Stack Technique
 
-# watch mode
-$ npm run start:dev
+-   **Framework** : NestJS
+-   **Base de données** : PostgreSQL
+-   **ORM** : TypeORM
+-   **Authentification** : JWT (JSON Web Tokens)
+-   **Documentation** : Swagger/OpenAPI
+-   **Validation** : class-validator & class-transformer
+-   **Hachage des mots de passe** : bcrypt
 
-# production mode
-$ npm run start:prod
-```
+## Endpoints API
 
-## Run tests
+### App
 
-```bash
-# unit tests
-$ npm run test
+-   `GET /` - Hello world
 
-# e2e tests
-$ npm run test:e2e
+### Utilisateurs
 
-# test coverage
-$ npm run test:cov
-```
+-   `GET /users` - Récupérer tous les utilisateurs
+-   `POST /users` - Créer un nouvel utilisateur
+-   `GET /users/{id}` - Récupérer un utilisateur spécifique
+-   `PATCH /users/{id}` - Mettre à jour un utilisateur
+-   `DELETE /users/{id}` - Supprimer un utilisateur
 
-## Deployment
+### Authentification
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+-   `GET /auth/login` - Connexion utilisateur
+-   `GET /auth/me` - Récupérer les informations de l'utilisateur connecté
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+##  Installation
+
+1.  Installez les dépendances :
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+2.  Lancez la base de données PostgreSQL et créez un fichier `.env`  avec les variable d'environnement
 
-## Resources
 
-Check out a few resources that may come in handy when working with NestJS:
+3.  Démarrez l'application :
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
 
-## Support
+nest start --env-file .env   
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
 
-## Stay in touch
+L'application sera disponible sur `http://localhost:3000`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+##  Documentation API
 
-## License
+La documentation Swagger est automatiquement générée et accessible sur : `http://localhost:3000/api`
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+##  Collections de requêtes
+
+Le projet inclut des collections de requêtes Bruno dans le dossier `requests_collection/` pour tester facilement tous les endpoints de l'API.
+
