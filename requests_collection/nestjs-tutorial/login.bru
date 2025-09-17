@@ -1,20 +1,18 @@
 meta {
-  name: create user
+  name: login
   type: http
   seq: 1
 }
 
-post {
-  url: http://localhost:3000/users/
+get {
+  url: http://localhost:3000/auth/login
   body: json
   auth: none
 }
 
 body:json {
   {
-    "name": "test",
     "email": "test@test.ca",
-    "role": "ADMIN",
     "password": "Test@2002"
   }
 }

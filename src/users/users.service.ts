@@ -6,6 +6,7 @@ import { User } from './entity/User.entity';
 import { plainToInstance } from 'class-transformer';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import * as bcrypt from 'bcrypt';
+import { UserResponse } from './model/UserResponse';
 
 @Injectable()
 export class UsersService {
@@ -28,6 +29,14 @@ export class UsersService {
             throw new NotFoundException({ message: `User ${id} not found`}); 
         }
         return plainToInstance(UserResponseDto, user);
+    }
+
+    async getOneUserByMail(email: string): Promise<UserResponse>{
+        const user = this.entityManager.findOneBy(User, { email },)
+        if(!user){
+            throw new NotFoundException({ message: `User with email ${email} not found`}); 
+        }
+        return plainToInstance(UserResponse, user);
     }
 
     async createUser(user: CreateUserDto): Promise<UserResponseDto> {

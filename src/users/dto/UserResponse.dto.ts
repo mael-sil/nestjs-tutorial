@@ -1,14 +1,11 @@
 import { Exclude } from "class-transformer";
 import { RoleEnum } from "./Role.enum";
+import { UserResponse } from "../model/UserResponse";
 
-export class UserResponseDto{
+export class UserResponseDto extends UserResponse{
     @Exclude()
-    id: number;
+    declare  id: number;
 
     @Exclude()
-    password: string;
-    
-    name: string;
-    email: string;
-    role: RoleEnum;
+    declare password: string;
 }
