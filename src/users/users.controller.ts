@@ -25,7 +25,6 @@ export class UsersController {
   @Get()
   @ApiOkResponse({ type: UserResponseDto, isArray: true })
   async getAllUsers(@Query(ValidationPipe) query: getAllUserQueryDto) {
-    console.log(query.role)
     return this.userService.getAllUsers(query.role)
   }
 
