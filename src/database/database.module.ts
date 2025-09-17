@@ -5,11 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: '127.0.0.1',
-      port: 5433,
-      username: 'postgres',
-      password: 'root',
-      database: 'nest_tutorial_db',
+      host: String(process.env.DB_HOST),
+      port: parseInt(process.env.DB_PORT || '5432'),
+      username: String(process.env.DB_USERNAME),
+      password: String(process.env.DB_PASSWORD),
+      database: String(process.env.DB_NAME),
       autoLoadEntities: true,
       synchronize: true, // Disable in production
     }),
