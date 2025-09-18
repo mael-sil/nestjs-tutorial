@@ -13,17 +13,14 @@ export class UsersService {
   constructor(private readonly entityManager: EntityManager) {}
 
   async getAllUsers(role?: RoleEnum): Promise<UserResponseDto[]> {
-    let users;
-    if (role) {
-      users = await this.entityManager.findBy(User, { role: Equal(role) });
-    } else {
-      users = await this.entityManager.find(User);
-    }
-    return plainToInstance<UserResponseDto, User[]>(UserResponseDto, users);
+    const users: User[] = role
+      ? await this.entityManager.findBy(User, { role: Equal(role) })
+      : await this.entityManager.find(User);
+    return plainToInstance(UserResponseDto, users);
   }
 
   async getOneUser(id: number): Promise<UserResponseDto> {
-    const user = this.entityManager.findOneBy(User, { id });
+    const user = await this.entityManager.findOneBy(User, { id });
     if (!user) {
       throw new NotFoundException({ message: `User ${id} not found` });
     }
@@ -31,7 +28,7 @@ export class UsersService {
   }
 
   async getOneUserByMail(email: string): Promise<UserResponse> {
-    const user = this.entityManager.findOneBy(User, { email });
+    const user = await this.entityManager.findOneBy(User, { email });
     if (!user) {
       throw new NotFoundException({
         message: `User with email ${email} not found`,
@@ -58,7 +55,7 @@ export class UsersService {
     if (!(await this.getOneUser(id))) {
       throw new NotFoundException({ message: `User ${id} not found` });
     }
-    const result = await this.entityManager.update(User, id, userUpdate);
+    await this.entityManager.update(User, id, userUpdate);
     return plainToInstance(UserResponseDto, this.getOneUser(id));
   }
 

@@ -13,7 +13,6 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
-import { RoleEnum } from './dto/Role.enum';
 import { getAllUserQueryDto } from './dto/GetAllUserQuery.dto';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { UserResponseDto } from './dto/UserResponse.dto';
