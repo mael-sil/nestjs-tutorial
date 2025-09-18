@@ -65,9 +65,15 @@ npm install
 
 3.  Démarrez l'application :
 
+- Normalement
 ```bash
 
-nest start --env-file .env   
+npm run start
+```
+
+- En mode dev
+```bash
+npm run start:dev
 
 ```
 
