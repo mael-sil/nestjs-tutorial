@@ -25,32 +25,33 @@ export class UsersController {
   @Get()
   @ApiOkResponse({ type: UserResponseDto, isArray: true })
   async getAllUsers(@Query(ValidationPipe) query: getAllUserQueryDto) {
-    return this.userService.getAllUsers(query.role)
+    return this.userService.getAllUsers(query.role);
   }
 
   @Get(':id')
   @ApiOkResponse({ type: UserResponseDto })
   async getOneUser(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.getOneUser(id)
+    return this.userService.getOneUser(id);
   }
 
   @Post()
   @ApiOkResponse({ type: UserResponseDto })
   async createUser(@Body(ValidationPipe) user: CreateUserDto) {
-    return this.userService.createUser(user)
+    return this.userService.createUser(user);
   }
 
   @Patch(':id')
   @ApiOkResponse({ type: UserResponseDto })
-  async updateOneUser(@Param('id', ParseIntPipe) id: number, 
-  @Body(ValidationPipe) userUpdate: UpdateUserDto
+  async updateOneUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) userUpdate: UpdateUserDto,
   ) {
-    return this.userService.updateOneUser(id, userUpdate)
+    return this.userService.updateOneUser(id, userUpdate);
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: UserResponseDto })
   async deleteOneUser(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.deleteOneUser(id)
+    return this.userService.deleteOneUser(id);
   }
 }

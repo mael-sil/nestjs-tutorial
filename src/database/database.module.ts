@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [
+  imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: String(process.env.DB_HOST),

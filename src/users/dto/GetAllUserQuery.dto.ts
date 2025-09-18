@@ -1,12 +1,10 @@
-import { IsEnum, IsOptional } from "class-validator";
-import { RoleEnum } from "./Role.enum";
+import { IsEnum, IsOptional } from 'class-validator';
+import { RoleEnum } from './Role.enum';
 
 export class getAllUserQueryDto {
-    @IsOptional()
-    @IsEnum(RoleEnum,
-            {
-                message: "Valid role required"
-            }
-        )
-    role: RoleEnum;
+  @IsOptional()
+  @IsEnum(RoleEnum, {
+    message: 'Valid role required',
+  })
+  role: RoleEnum;
 }
